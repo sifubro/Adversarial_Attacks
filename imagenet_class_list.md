@@ -1,9 +1,5 @@
 # IMAGENET 1000 Class List
 
-This is used by most pretrained models included in **WekaDeeplearning4j**.
-
-[Back to Inference Tutorial](../../examples/inference.md#class-map-lookup-tables)
-
 | Class ID | Class Name                                                                                                                |
 |----------|---------------------------------------------------------------------------------------------------------------------------|
 | 0        | tench, Tinca tinca                                                                                                        |
