@@ -8,7 +8,7 @@ from typing import Union
 import tensorflow as tf
 
 from helper_functions import preprocess, get_imagenet_labels, get_model_pred, decode_predictions, postprocess
-from adversarial_attacks import run_fast_gradient_sign_iterative_method, TargetedFGSM
+from adversarial_attacks import TargetedFGSM
 from adversarial_attack_base import AdversarialAttack
 
 
@@ -26,7 +26,6 @@ tf.random.set_seed(SEED)
 
 def main(args):
     input_img_path = args.input_img_path
-    output_path = args.output_path
     target_index = args.target_class
 
     print("Downloading MobileNetV2")
@@ -77,9 +76,9 @@ def main(args):
     x_adv_array = postprocess(x_adv)[0].numpy()
 
     # save to disk
-    print(f"\nSaving images to {output_path}")
-    Image.fromarray(postprocess(input_image[0]).numpy().astype('uint8'), 'RGB').save(f"{output_path}/original_image_crop.png")
-    Image.fromarray(postprocess(x_adv)[0].numpy().astype('uint8'), 'RGB').save(f"{output_path}/adversarial_image_crop.png")
+    print(f"\nSaving images to {adversarial_attack_instance.output_path}")
+    Image.fromarray(postprocess(input_image[0]).numpy().astype('uint8'), 'RGB').save(f"{adversarial_attack_instance.output_path}/original_image_crop.png")
+    Image.fromarray(postprocess(x_adv)[0].numpy().astype('uint8'), 'RGB').save(f"{adversarial_attack_instance.output_path}/adversarial_image_crop.png")
 
     print("\nFinished!")
 
@@ -93,7 +92,7 @@ def main(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_img_path', '-i', required=True, type=str, default="./cat.jpg", help='path of image file to create adverserial attacks from it')
-    parser.add_argument('--output_path', '-o', required=False, type=str , default='./results_fgsm', help='where to save the adversarial attack')
+    #parser.add_argument('--output_path', '-o', required=False, type=str , default='./results_fgsm', help='where to save the adversarial attack')
     parser.add_argument('--target_class', '-t', required=True, type=int, default=254, help='index of the target class in the imagenet classification list. The default index 254 corresponds to a "pug" (dog breed)')
     parser.add_argument('--learning_rate', '-lr', required=False, type=float, default=0.01, help='learning rate for Gradient Descent')
     parser.add_argument('--sign_grad', '-sign', required=False, type=bool , default=True, help='True is using the sign of the gradient for optimization')

@@ -44,6 +44,7 @@ class TargetedFGSM(AdversarialAttack):
         self.sign_grad = sign_grad
         self.adv_iterations = adv_iterations
         self.num_classes = num_classes
+        self.output_path = "./results_fgsm"
 
         y_target = tf.one_hot(target_index, num_classes)
         self.y_target = tf.reshape(y_target, (1, num_classes))
