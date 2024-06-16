@@ -267,7 +267,30 @@ class FGSMMaskBackground(AdversarialAttack):
 
         print("Loading u2net")
         # Load the u2net model with onnxruntime
-        self.u2net_session = ort.InferenceSession("./u2net.onnx")
+        try:
+            self.u2net_session = ort.InferenceSession("./u2net.onnx")
+        except Exception as e:
+            print(e)
+            print("Downloading model..")
+            # download the model if it doesn't exist
+            import requests
+
+            def download_model(url, dest_path):
+                response = requests.get(url, stream=True)
+                response.raise_for_status()  # Ensure the request was successful
+                
+                with open(dest_path, "wb") as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+                print(f"Model downloaded and saved to {dest_path}")
+
+            url = "https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2net.onnx"
+            dest_path = "./u2net.onnx"  # Save the file in the current directory
+
+            download_model(url, dest_path)
+            self.u2net_session = ort.InferenceSession("./u2net.onnx")
+
+            
         # Create SessionOptions
         self.options = ort.SessionOptions()
         self.options.intra_op_num_threads = 2

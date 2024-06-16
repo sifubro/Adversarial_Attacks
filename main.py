@@ -67,6 +67,8 @@ def main(args):
                                         )
         
     elif args.attack_method == "FGSMMaskBackground":
+
+
         adversarial_attack_instance = FGSMMaskBackground(name="FGSMMaskBackground", 
                                         mask_background= bool(args.mask_background),
                                         target_index =target_index,   #254
