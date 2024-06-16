@@ -8,7 +8,8 @@ from typing import Union
 import tensorflow as tf
 
 from helper_functions import preprocess, get_imagenet_labels, get_model_pred, decode_predictions, postprocess
-from adversarial_attacks import run_fast_gradient_sign_iterative_method
+from adversarial_attacks import run_fast_gradient_sign_iterative_method, TargetedFGSM
+from adversarial_attack_base import AdversarialAttack
 
 
 # GLOBAL VARIABLES
@@ -35,7 +36,7 @@ def main(args):
     print("Model Summary")
     base_model.summary()
 
-    print("/nFreezing model weights")
+    print("Freezing model weights")
     base_model.trainable = False
 
     input_pil_image = Image.open(input_img_path)
@@ -43,42 +44,44 @@ def main(args):
 
     image_array = np.array(input_pil_image)[:,:,:3]
     orig_label, orig_prob, orig_preds = get_model_pred(base_model, image_array, preproc=True)
-    print(f"/nPrediction of base_model (before perturbation) on the {input_img_path}")
+    print(f"\nPrediction of base_model (before perturbation) on the {input_img_path}")
     print(orig_label, orig_prob)
 
 
     y_target = tf.one_hot(target_index, orig_preds.shape[-1])
     y_target = tf.reshape(y_target, (1, orig_preds.shape[-1]))
     _ , target_label, _ = get_imagenet_labels(y_target.numpy())
-    print(f"/nReceived target index: {target_index}, i.e. the index of {target_label}")
-    print(f"/nRunning iterative FGSM to fool the model into misclassifying the input_image as a {target_label}")
-
-    
-    learning_rate = args.learning_rate # default= 0.01 #0.05
-    sign_grad = args.sign_grad # default = True
-    adv_iterations = args.adv_iterations # default =30
+    print(f"\nReceived target index: {target_index}, i.e. the index of {target_label}")
+    print(f"\nRunning iterative FGSM to fool the model into misclassifying the input_image as a {target_label}")
 
     loss_object = tf.keras.losses.CategoricalCrossentropy()
 
-    x_adv = run_fast_gradient_sign_iterative_method(input_image,
-                                    target_index, 
-                                    base_model,
-                                    loss_object, 
-                                    learning_rate=learning_rate,
-                                    sign_grad=sign_grad,
-                                    adv_iterations = adv_iterations)
+    if args.attack_method == "FGSM_targeted":
+        adversarial_attack_instance = TargetedFGSM(name="FGSM_targeted", 
+                                        target_index =target_index,   #254
+                                        model = base_model,   #MobileNetV2
+                                        criterion  = loss_object,  #CCE
+                                        learning_rate=args.learning_rate,  # default= 0.01
+                                        sign_grad=args.sign_grad,  # default = True
+                                        adv_iterations = args.adv_iterations,  # default =30
+                                        num_classes = orig_preds.shape[-1]  # 1000
+                                        )
+    
+    
+    adversarial_attack_instance.run(input_image)
+
+    x_adv = adversarial_attack_instance.retrieve_attack()
 
 
-
-
+    # postprocess from [-1,1] --> [0,255]
     x_adv_array = postprocess(x_adv)[0].numpy()
 
     # save to disk
-    print(f"/nSaving images to {output_path}")
+    print(f"\nSaving images to {output_path}")
     Image.fromarray(postprocess(input_image[0]).numpy().astype('uint8'), 'RGB').save(f"{output_path}/original_image_crop.png")
     Image.fromarray(postprocess(x_adv)[0].numpy().astype('uint8'), 'RGB').save(f"{output_path}/adversarial_image_crop.png")
 
-    print("Finished!")
+    print("\nFinished!")
 
 
 
@@ -95,8 +98,7 @@ if __name__ == '__main__':
     parser.add_argument('--learning_rate', '-lr', required=False, type=float, default=0.01, help='learning rate for Gradient Descent')
     parser.add_argument('--sign_grad', '-sign', required=False, type=bool , default=True, help='True is using the sign of the gradient for optimization')
     parser.add_argument('--adv_iterations', '-iter', required=False, type=int, default=30, help='How many adversarial iterations to perform')
-
-
+    parser.add_argument('--attack_method', '-a', required=False, type=str, default="FGSM_targeted", help='Adversarial attack to run. See adversarial_attacks.py for more')
 
     args = parser.parse_args()
 
