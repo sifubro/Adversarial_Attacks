@@ -1,25 +1,22 @@
 # Adversarial_Attacks description
 Create imperceptible pertubations on an input image to fool the model (here mobilenetv2 pretrained on imagenet) to misclassify it as another class (for example an image of a "pug" which is a dog breed at index 254).
 
-### Module explanation
-- `adversarial_attack_experimentation.ipynb`: This is a **un-cleaned** development notebook containing basic ideas and code. Needs to be refactored. **For clean scripts and command line interface see below!**
-- `adversarial_attack_base.py`: Defines Abstract class (TODO: to convert to ABC) so that each attack can inherit from
-- `helper_functions.py`: Basic helper functions for preprocessing input, decoding predictions, postprocessing and visualization. 
-- `imagenet_class_list.md`: ImageNet classification indicies for each class (254=pug for example)
-- `main.py`: Main script for command line usage
+### Usage
+
+
+`pip install adversarial-attacks-white-black-box==0.1.0`
+
+-----------
 
 
 ### Experimentation
 For all attacks and experimentation done please see the notebook `adversarial_attack_experimentation.ipynb`.
 
+---------------
+
 ### Main script
 For a command line script do the following: 
 
------------
-
-`pip install adversarial-attacks-white-black-box==0.1.0`
-
------------
 
 **a) Targeted FGSM attack**
 
@@ -80,6 +77,16 @@ Results will be saved in `./results_fgsm_superpixel`
 --------------
 
 **For experimentation with more attacks see `adversarial_attack_experimentation.ipynb`**
+
+
+### Module explanation
+- `adversarial_attack_experimentation.ipynb`: This is a **un-cleaned** development notebook containing basic ideas and code. Needs to be refactored. **For clean scripts and command line interface see below!**
+- `adversarial_attack_base.py`: Defines Abstract class (TODO: to convert to ABC) so that each attack can inherit from
+- `helper_functions.py`: Basic helper functions for preprocessing input, decoding predictions, postprocessing and visualization. 
+- `imagenet_class_list.md`: ImageNet classification indicies for each class (254=pug for example)
+- `main.py`: Main script for command line usage
+
+
 
 ### TODO list:
 - Add additional abstract methods (convert AdversarialAttack class to ABC) so that each attack can inherit from
