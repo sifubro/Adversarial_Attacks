@@ -20,24 +20,31 @@ For a command line script do the following:
 -----------
 
 **a) Targeted FGSM attack**
+
+This will run the simplest form of attack: `Iterative FGSM targeted attack` to  fool the model into classifying an input image (here of a cat.jpg) to that of a pug (dog breed). The index 254 corresponds to the index of a "pug" in the imagenet dataset (see `imagenet_class_list.md`).
+
 `python main.py --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_fgsm`
 
-At the moment this will run the simplest form of attack: `Iterative FGSM targeted attack` to  fool the model into classifying an input image (here of a cat.jpg) to that of a pug (dog breed). The index 254 corresponds to the index of a "pug" in the imagenet dataset (see `imagenet_class_list.md`).
 
 -------------
 
 **b) FGSM attack masking background**
 
+This will run FGSM only on the foregound object (main one) while masking the background during optimization
+
 `python main.py --input_img_path ./cat.jpg --attack_method FGSMMaskBackground --target_class 254 --mask_background True --learning_rate 0.05 --sign_grad True --adv_iterations 10`
 
 Results will be saved in `./results_mask_background`
 
+TODO: Do the reverse
 ------------
 
 
 **c) Zeroth Order Optimization Strategy**
+
+This will run a Black Box attack without assuming we have access to the gradients of the model. We estimate the zeroth-order gradient by using 2 perturbed samples.
 
 `python main.py --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
 
@@ -48,9 +55,12 @@ Results will be saved in `./results_zoo`
 
 **d) Natural Evolution Strategies**
 
+
 TODO
 
-Results will be saved in `./results_zoo`
+This will run a Black Box attack without assuming we have access to the gradients of the model. We estimate the gradient by using a family of perturbations (e.g. Gaussian)
+
+Results will be saved in `./results_nes`
 
 --------------
 
@@ -58,7 +68,7 @@ Results will be saved in `./results_zoo`
 
 TODO
 
-Results will be saved in `./results_superpixel_fgsm`
+Results will be saved in `./results_fgsm_superpixel`
 
 --------------
 
