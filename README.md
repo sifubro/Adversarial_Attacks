@@ -103,10 +103,16 @@ Results will be saved in `./results_fgsm_superpixel`
 
 -----------
 
+### Nest Steps:
+- Add an L1/L2 loss between the original image and perturbation to ensure adversary looks clost to original
+- Transfer black box attack. Try to fool another model e.g. ResNet50 and see if the attacks transfer to MobileNetv2
+- Experiment more with attacks (e.g. NES, modifying foreground/background and superpixels)
+
+-----------
+
 ### TODO list:
 - Add additional abstract methods (convert AdversarialAttack class to ABC) so that each attack can inherit from
-- experiment more with attacks (e.g. NES, modifying foreground/background and superpixels)
-- 
+- Add `unit testing`
 - Introduce `logging` module
 - Add `typing` for each function
 - `Dockerize` implementation
@@ -117,11 +123,11 @@ Results will be saved in `./results_fgsm_superpixel`
 
 ### Instructions on how to create the package
 
-python setup.py sdist bdist_wheel
+`python setup.py sdist bdist_wheel`
 
-pip install twine
+`pip install twine`
 
-twine upload dist/*
+`twine upload dist/*`
 
 if failed login to PyPI account https://pypi.org/account/login/
 
