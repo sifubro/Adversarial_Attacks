@@ -5,6 +5,10 @@ Create imperceptible pertubations on an input image to fool the model (here mobi
 
 -----------
 
+conda create --name virtenvname python=3.9
+
+conda activate virtenvname
+
 `pip install adversarial-attacks-white-black-box==0.1.0`
 
 -----------
