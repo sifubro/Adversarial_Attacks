@@ -3,6 +3,7 @@ Create imperceptible pertubations on an input image to fool the model (here mobi
 
 ### Usage
 
+-----------
 
 `pip install adversarial-attacks-white-black-box==0.1.0`
 
@@ -87,6 +88,7 @@ Results will be saved in `./results_fgsm_superpixel`
 - `main.py`: Main script for command line usage
 
 
+-----------
 
 ### TODO list:
 - Add additional abstract methods (convert AdversarialAttack class to ABC) so that each attack can inherit from
@@ -97,6 +99,8 @@ Results will be saved in `./results_fgsm_superpixel`
 - `Dockerize` implementation
     - create Dockerfile and run inside a container to ensure same packages
     - serve the methods
+
+-----------
 
 ### Instructions on how to create the package
 
