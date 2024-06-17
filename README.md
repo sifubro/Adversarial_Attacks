@@ -1,6 +1,8 @@
 # Adversarial_Attacks description
 Create imperceptible pertubations on an input image to fool the model (here mobilenetv2 pretrained on imagenet) to misclassify it as another class (for example an image of a "pug" which is a dog breed at index 254).
 
+**Best results obtained using the simple Targeted FGSM attack. results in ./adversarial-attacks-white-black-box/results_fgsm**
+
 pypi repo: https://pypi.org/project/adversarial-attacks-white-black-box/0.1.7/
 
 ### Usage
