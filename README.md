@@ -115,7 +115,9 @@ if failed login to PyPI account https://pypi.org/account/login/
 and the setting "Add API token" -> copy and configue twine as follows
 
 [pypi]
+
 username = your_username
+
 password = API-token
 
 (for windows under C:\Users\Username\)
