@@ -1,8 +1,7 @@
 '''
-This module with create a class `AdversarialAttack` and each type of attack should subclass it
-It should act as a common interface
+This module defines class `AdversarialAttack` that acts as a common interface for adversarial attacks
+Each type of attack should subclass it
 '''
-
 
 class AdversarialAttack:
 
