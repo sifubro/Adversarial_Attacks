@@ -111,10 +111,6 @@ class TargetedFGSM(AdversarialAttack):
 
 
 
-
-
-
-
 class FGSMMaskBackground(AdversarialAttack):
 
     def __init__(self, name="FGSMMaskBackground", 
