@@ -53,7 +53,8 @@ adversarial-attacks --input_img_path ./cat.jpg --output_path ./results_mask_back
 
 Results will be saved in `./results_mask_background`
 
-TODO: Do the reverse
+**TODO:** Do the reverse, i.e. mask the foreground and optimize te background
+
 ------------
 
 
