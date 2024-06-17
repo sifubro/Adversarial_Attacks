@@ -15,7 +15,9 @@ For all attacks and experimentation done please see the notebook `adversarial_at
 ### Main script
 For a command line script do the following: 
 
-`pip install requirements.txt`
+-----------
+
+`pip install adversarial-attacks-white-black-box==0.1.0`
 
 -----------
 
@@ -23,10 +25,15 @@ For a command line script do the following:
 
 This will run the simplest form of attack: `Iterative FGSM targeted attack` to  fool the model into classifying an input image (here of a cat.jpg) to that of a pug (dog breed). The index 254 corresponds to the index of a "pug" in the imagenet dataset (see `imagenet_class_list.md`).
 
-`python main.py --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
+`adversarial-attacks --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_fgsm`
 
+**Remark** If you are having trouble just go in the subdirectory `adversarial_attacks_white_black_box` and run:
+
+`python main.py --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
+
+(remember first to pip install the requirements.txt)
 
 -------------
 
@@ -34,7 +41,7 @@ Results will be saved in `./results_fgsm`
 
 This will run FGSM only on the foregound object (main one) while masking the background during optimization
 
-`python main.py --input_img_path ./cat.jpg --attack_method FGSMMaskBackground --target_class 254 --mask_background True --learning_rate 0.05 --sign_grad True --adv_iterations 10`
+`adversarial-attacks --input_img_path ./cat.jpg --attack_method FGSMMaskBackground --target_class 254 --mask_background True --learning_rate 0.05 --sign_grad True --adv_iterations 10`
 
 Results will be saved in `./results_mask_background`
 
@@ -46,7 +53,7 @@ TODO: Do the reverse
 
 This will run a Black Box attack without assuming we have access to the gradients of the model. We estimate the zeroth-order gradient by using 2 perturbed samples.
 
-`python main.py --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
+`adversarial-attacks --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_zoo`
 
@@ -83,3 +90,21 @@ Results will be saved in `./results_fgsm_superpixel`
 - `Dockerize` implementation
     - create Dockerfile and run inside a container to ensure same packages
     - serve the methods
+
+### Instructions on how to create the package
+
+python setup.py sdist bdist_wheel
+
+pip install twine
+
+twine upload dist/*
+
+if failed login to PyPI account https://pypi.org/account/login/
+
+and the setting "Add API token" -> copy and configue twine as follows
+
+[pypi]
+username = your_username
+password = API-token
+
+(for windows under C:\Users\Username\)
