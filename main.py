@@ -8,7 +8,7 @@ from typing import Union
 import tensorflow as tf
 
 from helper_functions import preprocess, get_imagenet_labels, get_model_pred, decode_predictions, postprocess
-from adversarial_attacks import TargetedFGSM, FGSMMaskBackground
+from adversarial_attacks import TargetedFGSM, FGSMMaskBackground, ZerothOrderOptimization
 from adversarial_attack_base import AdversarialAttack
 
 
@@ -79,6 +79,20 @@ def main(args):
                                         adv_iterations = args.adv_iterations,  # default =30
                                         num_classes = orig_preds.shape[-1]  # 1000
                                         )
+        
+    elif args.attack_method == "ZerothOrderOptimization":
+        adversarial_attack_instance = ZerothOrderOptimization(name="ZerothOrderOptimization", 
+                                        add_noise = args.add_noise, #True
+                                        noise_max_val = args.noise_max_val,   #0.01
+                                        epsilon= args.epsilon,   #0.05
+                                        target_index =target_index,   #254
+                                        model = base_model,   #MobileNetV2
+                                        criterion  = loss_object,  #CCE
+                                        learning_rate=args.learning_rate,  # default= 0.05
+                                        sign_grad=args.sign_grad,  # default = True
+                                        adv_iterations = args.adv_iterations,  # default =30
+                                        num_classes = orig_preds.shape[-1]  # 1000
+                                        )
     
     adversarial_attack_instance.run(input_image)
 
@@ -111,6 +125,9 @@ if __name__ == '__main__':
     parser.add_argument('--sign_grad', '-sign', required=False, type=bool , default=True, help='True is using the sign of the gradient for optimization')
     parser.add_argument('--adv_iterations', '-iter', required=False, type=int, default=30, help='How many adversarial iterations to perform')
     parser.add_argument('--mask_background', '-m', required=False, type=bool , default=True, help='True for masking the background in FGSM and performing the attack on the foreground object')
+    parser.add_argument('--add_noise', '-an', required=False, type=bool , default=True, help='True adding noise to the adversarial attack for ZOO')
+    parser.add_argument('--noise_max_val', '-nv', required=False, type=float , default=0.01, help='Max value for uniform noise to the adversarial attack for ZOO')
+    parser.add_argument('--epsilon', '-e', required=False, type=float , default=0.05, help='value for adversarial perturbation to estimate gradients')
     parser.add_argument('--attack_method', '-a', required=False, type=str, default="FGSM_targeted", help='Adversarial attack to run. See adversarial_attacks.py for more')
 
     args = parser.parse_args()
