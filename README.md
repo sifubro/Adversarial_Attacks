@@ -20,7 +20,7 @@ For a command line script do the following:
 -----------
 
 **a) Targeted FGSM attack**
-`python main.py --input_img_path ./cat.jpg --output_path ./results --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
+`python main.py --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_fgsm`
 
@@ -38,6 +38,8 @@ Results will be saved in `./results_mask_background`
 
 
 **c) Zeroth Order Optimization Strategy**
+
+`python main.py --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_zoo`
 
