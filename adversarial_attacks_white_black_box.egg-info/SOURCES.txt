@@ -1,0 +1,15 @@
+LICENSE.md
+README.md
+setup.py
+adversarial_attacks_white_black_box/__init__.py
+adversarial_attacks_white_black_box/adversarial_attack_base.py
+adversarial_attacks_white_black_box/adversarial_attacks.py
+adversarial_attacks_white_black_box/helper_functions.py
+adversarial_attacks_white_black_box/main.py
+adversarial_attacks_white_black_box/run.py
+adversarial_attacks_white_black_box.egg-info/PKG-INFO
+adversarial_attacks_white_black_box.egg-info/SOURCES.txt
+adversarial_attacks_white_black_box.egg-info/dependency_links.txt
+adversarial_attacks_white_black_box.egg-info/entry_points.txt
+adversarial_attacks_white_black_box.egg-info/requires.txt
+adversarial_attacks_white_black_box.egg-info/top_level.txt

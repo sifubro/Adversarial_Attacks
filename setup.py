@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='adversarial_attacks_white_black_box',
-    version='0.1.1',
+    version='0.1.7',
     packages=find_packages(),
     install_requires=[
         # Add the dependencies from your requirements.txt here
