@@ -1,6 +1,8 @@
 # Adversarial_Attacks description
 Create imperceptible pertubations on an input image to fool the model (here mobilenetv2 pretrained on imagenet) to misclassify it as another class (for example an image of a "pug" which is a dog breed at index 254).
 
+repo: https://github.com/sifubro/Adversarial_Attacks
+
 ### Usage
 
 -----------
@@ -9,9 +11,7 @@ conda create --name virtenvname python=3.9
 
 conda activate virtenvname
 
-`pip install adversarial-attacks-white-black-box==0.1.0`
-
-`cd adversarial-attacks-white-black-box`
+`pip install adversarial-attacks-white-black-box==0.1.1`
 
 -----------
 
@@ -33,6 +33,11 @@ This will run the simplest form of attack: `Iterative FGSM targeted attack` to  
 
 Results will be saved in `./results_fgsm`
 
+**Remark** If you are having trouble just go in the subdirectory `adversarial_attacks_white_black_box` and run:
+
+`python main.py --input_img_path ./cat.jpg --target_class 254 --learning_rate 0.01 --sign_grad True --adv_iterations 30`
+
+(remember first to pip install the requirements.txt)
 
 -------------
 
@@ -40,7 +45,7 @@ Results will be saved in `./results_fgsm`
 
 This will run FGSM only on the foregound object (main one) while masking the background during optimization
 
-`python main.py  --input_img_path ./cat.jpg --attack_method FGSMMaskBackground --target_class 254 --mask_background True --learning_rate 0.05 --sign_grad True --adv_iterations 10`
+`adversarial-attacks --input_img_path ./cat.jpg --attack_method FGSMMaskBackground --target_class 254 --mask_background True --learning_rate 0.05 --sign_grad True --adv_iterations 10`
 
 Results will be saved in `./results_mask_background`
 
@@ -52,7 +57,7 @@ TODO: Do the reverse
 
 This will run a Black Box attack without assuming we have access to the gradients of the model. We estimate the zeroth-order gradient by using 2 perturbed samples.
 
-`python main.py  --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
+`adversarial-attacks --input_img_path ./cat.jpg  --attack_method ZerothOrderOptimization  --target_class 254 --epsilon 0.05 --learning_rate 0.1 --add_noise True --noise_max_val 0.01 --sign_grad True --adv_iterations 30`
 
 Results will be saved in `./results_zoo`
 

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='adversarial_attacks_white_black_box',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(),
     install_requires=[
         # Add the dependencies from your requirements.txt here
@@ -10,11 +10,11 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'adversarial-attack=adversarial_attacks_white_black_box.main:main',  # Replace `main` with your main function
+            'adversarial-attacks=adversarial_attacks_white_black_box.run:main',  # Replace `main` with your main function
         ],
     },
     author='Theodoros Kasioumis',
-    author_email='theodoros.kasioumis.email@example.com',
+    author_email='theodoros.kasioumis@gmail.com',
     description='Perform White-Box and Black-Box adversarial attacks on images.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
