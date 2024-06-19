@@ -17,12 +17,6 @@ pypi repo: https://pypi.org/project/adversarial-attacks-white-black-box/0.1.7/
 
 -----------
 
-
-### Experimentation
-For all attacks and experimentation done please see the notebook `adversarial_attack_experimentation.ipynb`.
-
----------------
-
 ### Main script
 For a command line script do the following: 
 
@@ -92,7 +86,10 @@ Results will be saved in `./results_fgsm_superpixel`
 
 --------------
 
-**For experimentation with more attacks see `adversarial_attack_experimentation.ipynb`**
+### Experimentation
+For all attacks and experimentation done please see the notebook `adversarial_attack_experimentation.ipynb`. This is a **un-cleaned** development notebook containing basic ideas and code. Needs to be refactored. **For clean scripts and command line interface see below!**
+
+---------------
 
 
 ### Module explanation
