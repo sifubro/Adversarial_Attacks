@@ -17,6 +17,39 @@ pypi repo: https://pypi.org/project/adversarial-attacks-white-black-box/0.1.7/
 
 -----------
 
+### Running the Docker Container
+
+
+
+1) Build the Docker image:
+
+`sh`
+
+```
+docker build -t adversarial_attacks_app .
+```
+
+2) Run the Docker container:
+
+`Windows`
+
+```
+docker run --name adversarial_attacks_app_container -p 5000:5000 -v %cd%:/app adversarial_attacks_app
+```
+
+`Linux`
+
+```
+docker run --name adversarial_attacks_app_container -p 5000:5000 -v $(pwd):/app adversarial_attacks_app
+```
+
+(In detail: `docker run --name  <container_name> -p  <port_on_host>:<port_on_container>   <name_of_docker_image>`)
+
+
+Open your browser and navigate to http://localhost:5000 to access the web interface.
+
+------------
+
 ### Main script
 For a command line script do the following: 
 
