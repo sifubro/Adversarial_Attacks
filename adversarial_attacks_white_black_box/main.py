@@ -4,12 +4,16 @@ import argparse
 import numpy as np
 from PIL import Image
 from typing import Union
+import matplotlib.pyplot as plt
 
 import tensorflow as tf
 
-from .helper_functions import preprocess, get_imagenet_labels, get_model_pred, decode_predictions, postprocess
-from .adversarial_attacks import TargetedFGSM, FGSMMaskBackground, ZerothOrderOptimization
-from .adversarial_attack_base import AdversarialAttack
+# from .helper_functions
+# from adversarial_attacks_white_black_box.helper_functions
+
+from helper_functions import preprocess, get_imagenet_labels, get_model_pred, decode_predictions, postprocess
+from adversarial_attacks import TargetedFGSM, FGSMMaskBackground, ZerothOrderOptimization
+from adversarial_attack_base import AdversarialAttack
 
 
 # GLOBAL VARIABLES
@@ -104,8 +108,24 @@ def run_attack(args):
 
     # save to disk
     print(f"\nSaving images to {args.output_path}")
-    Image.fromarray(postprocess(input_image[0]).numpy().astype('uint8'), 'RGB').save(f"{args.output_path}/original_image_crop.png")
-    Image.fromarray(postprocess(x_adv)[0].numpy().astype('uint8'), 'RGB').save(f"{args.output_path}/adversarial_image_crop.png")
+    original_image_crop = Image.fromarray(postprocess(input_image[0]).numpy().astype('uint8'), 'RGB')
+    adversarial_image_crop = Image.fromarray(postprocess(x_adv)[0].numpy().astype('uint8'), 'RGB')
+    noise_added = np.abs(np.array(original_image_crop) - np.array(adversarial_image_crop)).astype(np.float32)
+
+
+    original_image_crop.save(f"{args.output_path}/original_image_crop.png")
+    adversarial_image_crop.save(f"{args.output_path}/adversarial_image_crop.png")
+
+
+    # Create noise plot
+    plt.figure(figsize=(6, 6))
+    plt.imshow(noise_added)
+    plt.title(f"Noise min={round(np.min(noise_added),2)}, max={round(np.max(noise_added),2)}")
+    # Save plot to disk
+    plt.savefig(f"{args.output_path}/noise_image_crop.png")
+    #Image.fromarray(noise_added, 'RGB').save(f"{args.output_path}/noise_image_crop.png")
+    
+
 
     print("\nFinished!")
 
@@ -118,8 +138,8 @@ def run_attack(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_img_path', '-i', required=True, type=str, default="./cat.jpg", help='path of image file to create adverserial attacks from it')
-    parser.add_argument('--output_path', '-o', required=True, type=str , default='./results_fgsm', help='where to save the adversarial attack')
+    parser.add_argument('--input_img_path', '-i', required=True, type=str, default="adversarial_attacks_white_black_box/cat.jpg", help='path of image file to create adverserial attacks from it')
+    parser.add_argument('--output_path', '-o', required=True, type=str , default='static/results_fgsm', help='where to save the adversarial attack')
     parser.add_argument('--target_class', '-t', required=True, type=int, default=254, help='index of the target class in the imagenet classification list. The default index 254 corresponds to a "pug" (dog breed)')
     parser.add_argument('--learning_rate', '-lr', required=False, type=float, default=0.01, help='learning rate for Gradient Descent')
     parser.add_argument('--sign_grad', '-sign', required=False, type=bool , default=True, help='True is using the sign of the gradient for optimization')

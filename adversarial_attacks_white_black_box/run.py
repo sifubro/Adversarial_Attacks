@@ -1,7 +1,7 @@
 import argparse
 import logging
 
-from .main import *  # Adjust import as needed
+from adversarial_attacks_white_black_box.main import *  # Adjust import as needed
 
 
 

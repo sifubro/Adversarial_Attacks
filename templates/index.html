@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial Attack</title>
+</head>
+<body>
+  <h1>Adversarial Attack Parameters</h1>
+  <form method="POST">  //This element creates a form that will submit data via the POST method
+    <label for="input_img_path">Input Image Path:</label><br>
+    <input type="text" id="input_img_path" name="input_img_path" value="adversarial_attacks_white_black_box/cat.jpg" required><br><br>
+
+    <label for="output_path">Output Path:</label><br>
+    <input type="text" id="output_path" name="output_path" value="static/results_fgsm" required><br><br>
+
+    <label for="target_class">Target Class:</label><br>
+    <input type="number" id="target_class" name="target_class" value="254" required><br><br>
+
+    <label for="learning_rate">Learning Rate:</label><br>
+    <input type="number" step="0.01" id="learning_rate" name="learning_rate" value="0.01"><br><br>
+
+    <label for="sign_grad">Sign Gradient (True/False):</label><br>
+    <input type="text" id="sign_grad" name="sign_grad" value="True"><br><br>
+
+    <label for="adv_iterations">Adversarial Iterations:</label><br>
+    <input type="number" id="adv_iterations" name="adv_iterations" value="30"><br><br>
+
+    <label for="mask_background">Mask Background (True/False):</label><br>
+    <input type="text" id="mask_background" name="mask_background" value="True"><br><br>
+
+    <label for="add_noise">Add Noise (True/False):</label><br>
+    <input type="text" id="add_noise" name="add_noise" value="True"><br><br>
+
+    <label for="noise_max_val">Noise Max Value:</label><br>
+    <input type="number" step="0.01" id="noise_max_val" name="noise_max_val" value="0.01"><br><br>
+
+    <label for="epsilon">Epsilon:</label><br>
+    <input type="number" step="0.01" id="epsilon" name="epsilon" value="0.05"><br><br>
+
+    <label for="attack_method">Attack Method:</label><br>
+    <input type="text" id="attack_method" name="attack_method" value="FGSM_targeted"><br><br>
+
+    <button type="submit">Run</button>
+  </form>
+</body>
+</html>

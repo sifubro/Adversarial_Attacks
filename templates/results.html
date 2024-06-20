@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adversarial Attack</title>
+</head>
+<body>
+    <h2>Results</h2>
+    <p>Original Image:</p>
+    <img src="{{ url_for('static', filename='/results_fgsm/original_image_crop.png') }}" alt="Original Image">
+    <p>Adversarial Image:</p>
+    <img src="{{ url_for('static', filename='/results_fgsm/adversarial_image_crop.png') }}" alt="Adversarial Image">
+    <p>Noise Added:</p>
+    <img src="{{ url_for('static', filename='/results_fgsm/noise_image_crop.png') }}" alt="Noise Image">
+    <br>
+    <a href="/">Back</a>
+  </form>
+</body>
+</html>
