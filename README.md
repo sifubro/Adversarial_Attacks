@@ -17,8 +17,7 @@ pypi repo: https://pypi.org/project/adversarial-attacks-white-black-box/0.1.7/
 
 -----------
 
-### Running the Docker Container
-
+### Running the Docker Container and serve the results in Flask app
 
 
 1) Build the Docker image:
@@ -46,7 +45,7 @@ docker run --name adversarial_attacks_app_container -p 5000:5000 -v $(pwd):/app 
 (In detail: `docker run --name  <container_name> -p  <port_on_host>:<port_on_container>   <name_of_docker_image>`)
 
 
-Open your browser and navigate to http://localhost:5000 to access the web interface.
+3) Open your browser and navigate to `http://localhost:5000` to access the web interface.
 
 ------------
 
